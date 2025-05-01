@@ -1,0 +1,6 @@
+name: ArtasiaHikabrain
+version: '1.0'
+main: fr.zeloxeuh.artasiaHikabrain.ArtasiaHikabrain
+api-version: '1.21'
+authors: [ CAPELE Gabin ]
+description: Main plugin for Artasia Server

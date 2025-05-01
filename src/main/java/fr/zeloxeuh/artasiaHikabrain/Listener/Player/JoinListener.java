@@ -1,0 +1,83 @@
+package fr.zeloxeuh.artasiaHikabrain.Listener.Player;
+
+import fr.zeloxeuh.artasiaHikabrain.ArtasiaHikabrain;
+import fr.zeloxeuh.artasiaHikabrain.GameState;
+import fr.zeloxeuh.artasiaHikabrain.Manager.GameManager;
+import fr.zeloxeuh.artasiaHikabrain.Timer.AutoStart;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.List;
+
+public class JoinListener implements Listener {
+    private ArtasiaHikabrain instance;
+    private GameManager gameManager;
+
+    public JoinListener(ArtasiaHikabrain instance, GameManager gameManager) {
+        this.instance = instance;
+        this.gameManager = gameManager;
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event){
+        Player player = event.getPlayer();
+        Location hub = new Location(Bukkit.getWorld("hikabrain"), 0.476, 65, 0.493, 18.7f, -5.1f);
+        player.teleport(hub);
+        player.getInventory().clear();
+        player.setFoodLevel(20);
+        player.setHealth(20);
+        player.setLevel(0);
+
+        // This item allows you to choose your team by right-clicking on it.
+        ItemStack compass = new ItemStack(Material.COMPASS, 1);
+        ItemMeta compassItemMeta = compass.getItemMeta();
+        assert compassItemMeta != null;
+        compassItemMeta.setDisplayName("§6Teams Selection");
+        compassItemMeta.setLore(List.of("Right click to select your team."));
+        compass.setItemMeta(compassItemMeta);
+
+        player.getInventory().setItem(4, new ItemStack(compass));
+        player.updateInventory();
+
+        if (!gameManager.isState(GameState.WAITING)){
+            player.setGameMode(GameMode.SPECTATOR);
+            player.setAllowFlight(true);
+            player.setFlying(true);
+            event.setJoinMessage(null);
+
+            player.sendMessage("§cThe game has already started!");
+        }
+
+        if (!gameManager.getPlayers().contains(player)) {
+            gameManager.addPlayer(player);
+        }
+
+        player.setGameMode(GameMode.ADVENTURE);
+        event.setJoinMessage("§7[§eHikaBrain§7]§r " + player.getName() + " Joined the game <" + gameManager.getPlayers().size() + "/" + Bukkit.getMaxPlayers() + ">");
+
+        if (gameManager.isState(GameState.WAITING) && gameManager.getPlayers().size() == 2){
+            AutoStart start = new AutoStart(gameManager, player);
+            start.runTaskTimer(instance, 0, 20);
+            gameManager.setState(GameState.STARTING);
+        }
+
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event){
+        Player player = event.getPlayer();
+        if (gameManager.getPlayers().contains(player)) {
+            gameManager.removePlayer(player);
+        }
+        event.setQuitMessage("§7[§eHikaBrain§7]§r " + player.getName() + " left the game <" + gameManager.getPlayers().size() + "/" + Bukkit.getMaxPlayers() + ">");
+    }
+}
