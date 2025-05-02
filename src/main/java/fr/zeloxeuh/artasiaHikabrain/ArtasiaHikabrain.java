@@ -2,6 +2,7 @@ package fr.zeloxeuh.artasiaHikabrain;
 
 import fr.zeloxeuh.artasiaHikabrain.Listener.ListenerManager;
 import fr.zeloxeuh.artasiaHikabrain.Manager.GameManager;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -15,7 +16,9 @@ public final class ArtasiaHikabrain extends JavaPlugin {
     @Override
     public void onEnable() {
         System.out.println("§aArtasiaHikabrain v" + pluginInfos.getVersion() + " by Zeloxeuh");
-
+        if (Bukkit.getWorld("arene") == null) {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mv load arene");
+        }
         // Register EVENTS
         new ListenerManager().register();
 

@@ -1,6 +1,5 @@
 package fr.zeloxeuh.artasiaHikabrain.Timer;
 
-import fr.zeloxeuh.artasiaHikabrain.ArtasiaHikabrain;
 import fr.zeloxeuh.artasiaHikabrain.GameState;
 import fr.zeloxeuh.artasiaHikabrain.Manager.GameManager;
 import org.bukkit.Bukkit;
@@ -41,8 +40,13 @@ public class AutoStart extends BukkitRunnable {
         if (timer == 0) {
             for (Player p : gameManager.getPlayers()){
                 p.sendTitle("STARTING...", "§eGood Luck", 2,18, 8);
+                p.setLevel(0);
+                p.getInventory().clear();
+                p.updateInventory();
             }
-            Bukkit.broadcastMessage("§7[§eHikaBrain§7]§r STARTING...");
+            gameManager.teleportPlayersInArena();
+            Bukkit.broadcastMessage("§7[§eHikaBrain§7]§r STARTING...") ;
+            gameManager.setState(GameState.STARTING);
             cancel();
         }
         timer--;
