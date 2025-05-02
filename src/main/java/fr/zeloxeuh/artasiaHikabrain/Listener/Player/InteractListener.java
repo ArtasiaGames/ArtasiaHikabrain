@@ -80,9 +80,63 @@ public class InteractListener implements Listener {
 
             switch (item.getType()) {
                 case RED_WOOL:
+                    // Retirer le joueur de son équipe actuelle si nécessaire
+                    if (gameManager.getBlueTeam().getPlayers().contains(player)) {
+                        gameManager.getBlueTeam().removePlayer(player);
+                    }
+                    
+                    // Ajouter le joueur à l'équipe rouge
+                    if (!gameManager.getRedTeam().getPlayers().contains(player)) {
+                        gameManager.getRedTeam().addPlayer(player);
+                    }
+                    
+                    // Donner l'item de laine rouge
+                    ItemStack redWoolItem = new ItemStack(Material.RED_WOOL, 1);
+                    ItemMeta redWoolMeta = redWoolItem.getItemMeta();
+                    if (redWoolMeta != null) {
+                        redWoolMeta.setDisplayName(gameManager.getRedTeam().getColor() + "Équipe " + gameManager.getRedTeam().getName());
+                        redWoolMeta.setLore(List.of("§7Vous êtes dans l'équipe rouge"));
+                        redWoolItem.setItemMeta(redWoolMeta);
+                    }
+                    
+                    // Placer l'item dans la hotbar du joueur
+                    player.getInventory().setItem(0, redWoolItem);
+                    player.updateInventory();
+                    
+                    // Message de confirmation
+                    player.sendMessage("§7[§eHikaBrain§7] §fVous avez rejoint l'équipe " + 
+                            gameManager.getRedTeam().getColor() + gameManager.getRedTeam().getName());
                     break;
+                    
                 case BLUE_WOOL:
+                    // Retirer le joueur de son équipe actuelle si nécessaire
+                    if (gameManager.getRedTeam().getPlayers().contains(player)) {
+                        gameManager.getRedTeam().removePlayer(player);
+                    }
+                    
+                    // Ajouter le joueur à l'équipe bleue
+                    if (!gameManager.getBlueTeam().getPlayers().contains(player)) {
+                        gameManager.getBlueTeam().addPlayer(player);
+                    }
+                    
+                    // Donner l'item de laine bleue
+                    ItemStack blueWoolItem = new ItemStack(Material.BLUE_WOOL, 1);
+                    ItemMeta blueWoolMeta = blueWoolItem.getItemMeta();
+                    if (blueWoolMeta != null) {
+                        blueWoolMeta.setDisplayName(gameManager.getBlueTeam().getColor() + "Équipe " + gameManager.getBlueTeam().getName());
+                        blueWoolMeta.setLore(List.of("§7Vous êtes dans l'équipe bleue"));
+                        blueWoolItem.setItemMeta(blueWoolMeta);
+                    }
+                    
+                    // Placer l'item dans la hotbar du joueur
+                    player.getInventory().setItem(0, blueWoolItem);
+                    player.updateInventory();
+                    
+                    // Message de confirmation
+                    player.sendMessage("§7[§eHikaBrain§7] §fVous avez rejoint l'équipe " + 
+                            gameManager.getBlueTeam().getColor() + gameManager.getBlueTeam().getName());
                     break;
+                    
                 default:
                     break;
             }

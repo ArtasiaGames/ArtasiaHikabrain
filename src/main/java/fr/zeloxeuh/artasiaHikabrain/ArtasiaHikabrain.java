@@ -44,10 +44,4 @@ public final class ArtasiaHikabrain extends JavaPlugin {
     public static ArtasiaHikabrain getInstance() {
         return instance;
     }
-    public void setState(GameState state) {
-        this.state = state;
-    }
-    public boolean isState(GameState state) {
-        return this.state == state;
-    }
 }

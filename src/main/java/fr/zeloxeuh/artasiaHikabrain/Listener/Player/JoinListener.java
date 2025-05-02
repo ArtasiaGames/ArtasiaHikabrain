@@ -75,9 +75,21 @@ public class JoinListener implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent event){
         Player player = event.getPlayer();
+        
+        // Retirer le joueur de son équipe s'il en a une
+        if (gameManager.getRedTeam().getPlayers().contains(player)) {
+            gameManager.getRedTeam().removePlayer(player);
+            Bukkit.getLogger().info("[JoinListener] " + player.getName() + " a été retiré de l'équipe rouge");
+        } else if (gameManager.getBlueTeam().getPlayers().contains(player)) {
+            gameManager.getBlueTeam().removePlayer(player);
+            Bukkit.getLogger().info("[JoinListener] " + player.getName() + " a été retiré de l'équipe bleue");
+        }
+        
+        // Retirer le joueur de la liste des joueurs
         if (gameManager.getPlayers().contains(player)) {
             gameManager.removePlayer(player);
         }
+        
         event.setQuitMessage("§7[§eHikaBrain§7]§r " + player.getName() + " left the game <" + gameManager.getPlayers().size() + "/" + Bukkit.getMaxPlayers() + ">");
     }
 }

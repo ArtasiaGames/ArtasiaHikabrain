@@ -1,5 +1,6 @@
 package fr.zeloxeuh.artasiaHikabrain;
 
 public enum GameState {
-    WAITING, STARTING, PLAYING, ENDING
+    WAITING, STARTING, COUNTDOWN, PLAYING, FINISHED
+
 }

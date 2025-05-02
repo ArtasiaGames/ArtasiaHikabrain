@@ -3,7 +3,9 @@ package fr.zeloxeuh.artasiaHikabrain.Timer;
 import fr.zeloxeuh.artasiaHikabrain.GameState;
 import fr.zeloxeuh.artasiaHikabrain.Manager.GameManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class AutoStart extends BukkitRunnable {
@@ -43,6 +45,16 @@ public class AutoStart extends BukkitRunnable {
                 p.setLevel(0);
                 p.getInventory().clear();
                 p.updateInventory();
+
+                p.getInventory().setItem(0, new ItemStack(Material.IRON_SWORD, 1));
+                p.getInventory().setItem(1, new ItemStack(Material.IRON_PICKAXE, 1));
+                p.getInventory().setItem(2, new ItemStack(Material.GOLDEN_APPLE, 64));
+                for (int i = 3; i < 8; i++) {
+                    p.getInventory().setItem(i, new ItemStack(Material.SANDSTONE, 64));
+                }
+                p.getInventory().setItemInOffHand(new ItemStack(Material.SANDSTONE, 64));
+
+
             }
             gameManager.teleportPlayersInArena();
             Bukkit.broadcastMessage("§7[§eHikaBrain§7]§r STARTING...") ;
