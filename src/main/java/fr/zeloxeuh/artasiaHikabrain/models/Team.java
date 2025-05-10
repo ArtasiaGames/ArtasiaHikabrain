@@ -1,12 +1,12 @@
-package fr.zeloxeuh.artasiaHikabrain.Models;
+package fr.zeloxeuh.artasiaHikabrain.models;
 
 import org.bukkit.entity.Player;
 import java.util.ArrayList;
 
 public class Team {
-    private String name;
-    private String color;
-    private ArrayList<Player> players;
+    private final String name;
+    private final String color;
+    private final ArrayList<Player> players;
     private int points;
 
     public Team(String name, String color) {
