@@ -1,9 +1,9 @@
-package fr.zeloxeuh.artasiaHikabrain.Listener.Player;
+package fr.zeloxeuh.artasiaHikabrain.listener.player;
 
 import fr.zeloxeuh.artasiaHikabrain.ArtasiaHikabrain;
 import fr.zeloxeuh.artasiaHikabrain.GameState;
-import fr.zeloxeuh.artasiaHikabrain.Manager.GameManager;
-import fr.zeloxeuh.artasiaHikabrain.Timer.AutoStart;
+import fr.zeloxeuh.artasiaHikabrain.manager.GameManager;
+import fr.zeloxeuh.artasiaHikabrain.timer.AutoStart;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -19,8 +19,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 
 public class JoinListener implements Listener {
-    private ArtasiaHikabrain instance;
-    private GameManager gameManager;
+    private final ArtasiaHikabrain instance;
+    private final GameManager gameManager;
 
     public JoinListener(ArtasiaHikabrain instance, GameManager gameManager) {
         this.instance = instance;
@@ -37,7 +37,6 @@ public class JoinListener implements Listener {
         player.setHealth(20);
         player.setLevel(0);
 
-        // This item allows you to choose your team by right-clicking on it.
         ItemStack compass = new ItemStack(Material.COMPASS, 1);
         ItemMeta compassItemMeta = compass.getItemMeta();
         assert compassItemMeta != null;
