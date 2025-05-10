@@ -1,9 +1,9 @@
-package fr.zeloxeuh.artasiaHikabrain.Listener.Player;
+package fr.zeloxeuh.artasiaHikabrain.listener.player;
 
 import fr.zeloxeuh.artasiaHikabrain.ArtasiaHikabrain;
 import fr.zeloxeuh.artasiaHikabrain.GameState;
-import fr.zeloxeuh.artasiaHikabrain.Manager.GameManager;
-import fr.zeloxeuh.artasiaHikabrain.Utils.Utils;
+import fr.zeloxeuh.artasiaHikabrain.manager.GameManager;
+import fr.zeloxeuh.artasiaHikabrain.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,7 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 public class PlayerMovementListener implements Listener {
-    private GameManager gameManager;
+    private final GameManager gameManager;
 
     public PlayerMovementListener() {
         this.gameManager = ArtasiaHikabrain.getGameManager();
@@ -20,6 +20,11 @@ public class PlayerMovementListener implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
+        
+        // Si le jeu est terminé, on ne traite pas les mouvements
+        if (gameManager.isState(GameState.FINISHED)) {
+            return;
+        }
         
         if (gameManager.isState(GameState.COUNTDOWN)) {
             Utils.freezePlayer(event);
