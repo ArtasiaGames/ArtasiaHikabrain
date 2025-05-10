@@ -1,4 +1,4 @@
-package fr.zeloxeuh.artasiaHikabrain.Utils;
+package fr.zeloxeuh.artasiaHikabrain.utils;
 
 import org.bukkit.event.player.PlayerMoveEvent;
 
@@ -9,6 +9,5 @@ public class Utils {
                 event.getFrom().getZ() != event.getTo().getZ()) {
             event.setCancelled(true);
         }
-        return;
     }
 }
