@@ -1,4 +1,4 @@
-package fr.zeloxeuh.artasiaHikabrain.Builder;
+package fr.zeloxeuh.artasiaHikabrain.builder;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
