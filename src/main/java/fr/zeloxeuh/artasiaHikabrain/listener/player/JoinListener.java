@@ -64,7 +64,7 @@ public class JoinListener implements Listener {
         event.setJoinMessage("§7[§eHikaBrain§7]§r " + player.getName() + " Joined the game <" + gameManager.getPlayers().size() + "/" + Bukkit.getMaxPlayers() + ">");
 
         if (gameManager.isState(GameState.WAITING) && gameManager.getPlayers().size() == 2){
-            AutoStart start = new AutoStart(gameManager, player);
+            AutoStart start = new AutoStart(gameManager);
             start.runTaskTimer(instance, 0, 20);
             gameManager.setState(GameState.STARTING);
         }
